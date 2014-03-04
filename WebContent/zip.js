@@ -170,7 +170,11 @@
 		function readUint8Array(index, length, callback, onerror) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				callback(new Uint8Array(e.target.result));
+				try {
+					callback(new Uint8Array(e.target.result));
+				} catch (e) {
+					onerror(e);
+				}
 			};
 			reader.onerror = onerror;
 			reader.readAsArrayBuffer(blobSlice(blob, index, length));
